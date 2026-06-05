@@ -314,10 +314,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               
               final authState = ref.read(authViewModelProvider);
               if (authState.isSuccess && mounted) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const DashboardPage()),
+                setState(() {
+                  _selectedTab = 0;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Account created successfully! Please log in.'),
+                    backgroundColor: Colors.green,
+                  ),
                 );
+                ref.read(authViewModelProvider.notifier).resetState();
               } else if (authState.error != null && mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(authState.error!)),

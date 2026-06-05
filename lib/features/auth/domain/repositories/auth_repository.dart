@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:sharely/core/error/failures.dart';
 import 'package:sharely/features/auth/domain/entities/auth_entity.dart';
 
 abstract class IAuthRepository {
-  Future<Either<String, AuthEntity>> login(String email, String password);
-  Future<Either<String, bool>> register(AuthEntity entity);
-  Future<Either<String, bool>> logout();
-  Future<Either<String, AuthEntity>> getCurrentUser();
+  Future<Either<Failure, AuthEntity>> login(String email, String password);
+  Future<Either<Failure, bool>> register(AuthEntity entity);
+  Future<Either<Failure, bool>> logout();
+  Future<Either<Failure, AuthEntity>> getCurrentUser();
 }

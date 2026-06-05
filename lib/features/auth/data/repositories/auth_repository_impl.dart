@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sharely/core/error/failures.dart';
 import 'package:sharely/features/auth/data/datasources/local/auth_local_datasource.dart';
 import 'package:sharely/features/auth/data/models/auth_hive_model.dart';
 import 'package:sharely/features/auth/domain/entities/auth_entity.dart';
@@ -17,49 +18,49 @@ class AuthRepositoryImpl implements IAuthRepository {
       : _localDataSource = localDataSource;
 
   @override
-  Future<Either<String, AuthEntity>> getCurrentUser() async {
+  Future<Either<Failure, AuthEntity>> getCurrentUser() async {
     try {
       final user = await _localDataSource.getCurrentUser();
       if (user != null) {
         return Right(user.toEntity());
       } else {
-        return const Left("User not found");
+        return const Left(LocalDatabaseFailure(message: "User not found"));
       }
     } catch (e) {
-      return Left(e.toString());
+      return Left(LocalDatabaseFailure(message: e.toString()));
     }
   }
 
   @override
-  Future<Either<String, AuthEntity>> login(String email, String password) async {
+  Future<Either<Failure, AuthEntity>> login(String email, String password) async {
     try {
       final user = await _localDataSource.login(email, password);
       if (user != null) {
         return Right(user.toEntity());
       } else {
-        return const Left("Invalid email or password");
+        return const Left(LocalDatabaseFailure(message: "Invalid email or password"));
       }
     } catch (e) {
-      return Left(e.toString());
+      return Left(LocalDatabaseFailure(message: e.toString()));
     }
   }
 
   @override
-  Future<Either<String, bool>> logout() async {
+  Future<Either<Failure, bool>> logout() async {
     try {
       final success = await _localDataSource.logout();
       return Right(success);
     } catch (e) {
-      return Left(e.toString());
+      return Left(LocalDatabaseFailure(message: e.toString()));
     }
   }
 
   @override
-  Future<Either<String, bool>> register(AuthEntity entity) async {
+  Future<Either<Failure, bool>> register(AuthEntity entity) async {
     try {
       final isEmailExists = await _localDataSource.isEmailExists(entity.email);
       if (isEmailExists) {
-        return const Left("Email already exists");
+        return const Left(LocalDatabaseFailure(message: "Email already exists"));
       }
 
       final model = AuthHiveModel.fromEntity(entity);
@@ -67,10 +68,10 @@ class AuthRepositoryImpl implements IAuthRepository {
       if (success) {
         return const Right(true);
       } else {
-        return const Left("Failed to register user");
+        return const Left(LocalDatabaseFailure(message: "Failed to register user"));
       }
     } catch (e) {
-      return Left(e.toString());
+      return Left(LocalDatabaseFailure(message: e.toString()));
     }
   }
 }
