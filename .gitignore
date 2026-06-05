@@ -1,0 +1,57 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_copy/
+
+# Flutter/Dart related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Android related
+**/android/app/src/main/res/generated/
+**/android/gen/
+**/android/local.properties
+**/android/out/
+**/android/sdk.dir
+**/android/vendor/
+.gradle/
+
+# Symbolication logging
+capture_and_crash_logs/
+
+# Coverage reports
+coverage/
+
+# Windows related
+**/windows/flutter/ephemeral/
+**/windows/flutter/generated_plugin_registrant.cc
+**/windows/flutter/generated_plugin_registrant.h
+**/windows/out/
+
+# Linux related
+**/linux/flutter/ephemeral/
+**/linux/generated_plugin_registrant.cc
+**/linux/generated_plugin_registrant.h
+
+# Executables
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Secrets (Add your specific secret files here)
+.env*
